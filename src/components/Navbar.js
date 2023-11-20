@@ -8,9 +8,8 @@ export default function Navbar() {
         <nav className="nav">
             <Link to="/" className="site-title">Good</Link>
             <ul>
-                <InternalLink to="/">Groups</InternalLink>
+                <InternalLink to="/">Community</InternalLink>
                 <InternalLink to="/profile">Profile</InternalLink>
-                <InternalLink to="/exchanges">Exchanges</InternalLink>
             </ul>
         </nav>
     )
