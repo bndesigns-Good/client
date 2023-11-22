@@ -1,3 +1,42 @@
+/* ********** */
+/* Components */
+/* ********** */
+.primary-button {
+    background-color: #4D6150;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    color: #FFFDFC;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+
+    transition: 200ms ease-out;
+}
+
+.primary-button:hover {
+    background-color: #1A3522;
+    cursor: pointer;
+}
+
+.form-button {
+    background-color: #558FBE;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    color: #FFFDFC;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+
+    transition: 200ms ease-out;
+}
+
+.form-button:hover {
+    background-color: #2C4F5E;
+    cursor: pointer;
+}
+
 /* ****** */
 /* Navbar */
 /* ****** */
@@ -56,17 +95,54 @@
 .column-title {
     margin-bottom: 0.25rem;
 }
+.column-description {
+    margin-bottom: 0.5rem;
+}
+.create-offer-form {
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: #FFFDFC;
+    border-radius: 4px;
+    padding: 1rem 10rem;
+    margin-top: 0.5rem;
+    align-items: center;
+}
+.hide {
+    display: none;
+}
+.show {
+    display: flex;
+}
+.create-offer-form label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    width: 100%;
+}
+.create-offer-form input,
+.create-offer-form select {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.25rem;
+    font-family: inherit;
+    padding: 0.25rem;
+}
+.create-offer-form button {
+    width: fit-content;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
 .offerings-container {
     margin-top: 1rem;
     display: grid;
-    grid-template-columns: 50% 50%;
-    gap: 1.5rem;
+    grid-template-columns: 49% 49%;
+    gap: 2%;
 }
 .offering-card {
     background-color: #FFFDFC;
     border-radius: 4px;
     padding: 0.75rem 1.25rem 0.5rem;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    margin-bottom: 0.75rem;
 }
 .service {
     border-left: 5px solid #DA9F59;
