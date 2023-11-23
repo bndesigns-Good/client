@@ -8,6 +8,9 @@ export default function Community() {
     const [offerings, setOfferings] = useState([]);
     const [formClass, setFormClass] = useState("hide");
     const [title, setTitle] = useState("");
+    const [category, setCategory] = useState("");
+    const [price, setPrice] = useState(0);
+    const [offeree, setOfferee] = useState("");
 
     useEffect(() => {
         axios
@@ -21,11 +24,35 @@ export default function Community() {
         setFormClass("show");
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        alert(`The title you submitted is ${title}`)
+    const handleSubmit = async (event) => {
+        // event.preventDefault();
+        const formData = {
+            title: title,
+            category: category,
+            price: price,
+            offeree: offeree
+        };
+        try {
+            await axios.post('/offerings', formData);
+            alert(`Success! You should see your new offering when you close this window.`)
+        } catch (error) {
+            alert(`It looks like there was an error: ${error}`)
+        }
         setTitle("");
+        setCategory("");
+        setPrice(0);
+        setOfferee("");
         setFormClass("hide");
+    }
+
+    const deleteOffer = async (id) => {
+        try {
+            const response = await axios.delete(`/offerings/${id}`);
+            console.log(response);
+            alert(`Success! Your offering should be gone when you refresh the page.`)
+        } catch (error) {
+            alert(`It looks like there was an error: ${error}`)
+        }
     }
 
     return(
@@ -42,7 +69,8 @@ export default function Community() {
                         </label>
                         <label>
                             Category
-                            <select name="category">
+                            <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+                                <option value="" disabled>Please select a category</option>
                                 <option value="service">Service</option>
                                 <option value="assist">Assist</option>
                                 <option value="good">Good</option>
@@ -50,16 +78,16 @@ export default function Community() {
                             </select>
                         </label>
                         <label>
-                            Price <input name="price" type="number" defaultValue={0}/>
+                            Price <input name="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)}/>
                         </label>
                         <label>
-                            Offeree <input name="offeree" />
+                            Offeree <input name="offeree" value={offeree} onChange={(e) => setOfferee(e.target.value)}/>
                         </label>
                         <button type="submit" className="form-button">Submit</button>
                     </form>
                     <div className="offerings-container">
                         {offerings.map(offer => (
-                            <Offering key={offer.id} title={offer.title} category={offer.category} price={offer.price} offeree={offer.offeree} />
+                            <Offering key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} offeree={offer.offeree} deleteOffer={deleteOffer}/>
                         ))}
                     </div>
                 </div>
@@ -74,9 +102,9 @@ export default function Community() {
     )
 }
 
-function Offering({title, category, price, offeree, ...props}) {
+function Offering({dbid, title, category, price, offeree, deleteOffer, ...props}) {
     return(
-        <div className={`offering-card ${category}`} {...props}>
+        <div id={`offering-${dbid}`} className={`offering-card ${category}`} {...props}>
             <div className="offering-row">
                 <h3 className="offering-title">{title}</h3>
                 <p>{price}</p>
@@ -84,6 +112,7 @@ function Offering({title, category, price, offeree, ...props}) {
             <div className="offering-row">
                 <Link to="/profile" className="offeree">{offeree}</Link>
                 <button>Request</button>
+                <button onClick={() => deleteOffer(dbid)}>Delete</button>
             </div>
         </div>
     )
