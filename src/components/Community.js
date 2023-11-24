@@ -10,38 +10,59 @@ export default function Community() {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [price, setPrice] = useState(0);
-    const [offeree, setOfferee] = useState("");
+    // We'll pull the ID from the current user once login is set up
+    const [tempOffereeId, setTempOffereeId] = useState(1);
 
     useEffect(() => {
-        axios
-        .get('/offerings')
-        .then(res => res.data)
-        .then(offerings => setOfferings(offerings));
+        getOfferingsWithOfferees();
+        setTempOffereeId(1);
     }, []);
+
+    const getOfferingsWithOfferees = async () => {
+        try {
+            const response = await axios.get('/offerings');
+            const offerings = response.data;
+            Promise.all(offerings.map(async (offering) => {
+                const offeree = await axios
+                    .get(`/user/${offering.offeree_id}`)
+                    .then(response => response.data.name)
+                    .catch(error => console.log(error));
+                offering.offeree = offeree;
+                return offering;
+            }))
+            .then(updatedOfferings => setOfferings(updatedOfferings));
+        } catch (error) {
+            console.log(error)
+        }      
+    }
 
     const showForm = (event) => {
         event.preventDefault();
         setFormClass("show");
     }
 
+    const hideForm = (event) => {
+        event.preventDefault();
+        setFormClass("hide");
+    }
+
     const handleSubmit = async (event) => {
-        // event.preventDefault();
+        event.preventDefault();
         const formData = {
             title: title,
             category: category,
             price: price,
-            offeree: offeree
+            offeree_id: tempOffereeId
         };
         try {
             await axios.post('/offerings', formData);
-            alert(`Success! You should see your new offering when you close this window.`)
+            alert(`Success! You should see your new offering when you refresh the page.`)
         } catch (error) {
             alert(`It looks like there was an error: ${error}`)
         }
         setTitle("");
         setCategory("");
         setPrice(0);
-        setOfferee("");
         setFormClass("hide");
     }
 
@@ -64,6 +85,12 @@ export default function Community() {
                     <p className="column-description">See all that your community has to offer! Offerings fall under four categories: services, assists, goods, and tools.</p>
                     <button className="primary-button" onClick={showForm}>Create offer</button>
                     <form className={`create-offer-form ${formClass}`} onSubmit={handleSubmit}>
+                        <div className="form-header">
+                            <h2>Create a new offer</h2>
+                            <button className="close-button" onClick={hideForm}>
+                                <span className="material-symbols-outlined">close</span>
+                            </button>
+                        </div>
                         <label>
                             Title <input name="title" value={title} onChange={(e) => setTitle(e.target.value)}/>
                         </label>
@@ -79,9 +106,6 @@ export default function Community() {
                         </label>
                         <label>
                             Price <input name="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)}/>
-                        </label>
-                        <label>
-                            Offeree <input name="offeree" value={offeree} onChange={(e) => setOfferee(e.target.value)}/>
                         </label>
                         <button type="submit" className="form-button">Submit</button>
                     </form>

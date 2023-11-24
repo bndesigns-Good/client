@@ -3,6 +3,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Community from './components/Community';
 import Profile from './components/Profile';
+import Signup from './components/Signup'
 
 import { Route, Routes } from 'react-router-dom';
 
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Community />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </div>
     </div>

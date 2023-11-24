@@ -10,6 +10,7 @@ export default function Navbar() {
             <ul>
                 <InternalLink to="/">Community</InternalLink>
                 <InternalLink to="/profile">Profile</InternalLink>
+                <InternalLink to="/signup">Signup</InternalLink>
             </ul>
         </nav>
     )
