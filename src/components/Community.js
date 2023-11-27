@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import './components.css';
 import { ColorRing } from 'react-loader-spinner';
 
 import { Link } from 'react-router-dom';
 
-export default function Community() {
+export default function Community({ currentUserId }) {
     const [offersLoaded, setOffersLoaded] = useState(false);
     const [offers, setOffers] = useState([]);
     const [offerUsers, setOfferUsers] = useState([]);
@@ -13,12 +14,9 @@ export default function Community() {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [price, setPrice] = useState(0);
-    // We'll pull the ID from the current user once login is set up
-    const [tempOffereeId, setTempOffereeId] = useState(1);
 
     useEffect(() => {
         getOffersWithUsers();
-        setTempOffereeId(1);
     }, []);
 
     const getOffersWithUsers = async () => {
@@ -53,10 +51,14 @@ export default function Community() {
         // Get all the offers from the database and add them to the state
         // Then turn off the offers loader
         // Do this last so the user names will be loaded before the offers are rendered
-        await axios.get('/offers').then(response => response.data).then(offers => {
-            setOffers(offers);
-            setOffersLoaded(true);
-        });
+        try {
+            await axios.get('/offers').then(response => response.data).then(offers => {
+                setOffers(offers);
+                setOffersLoaded(true);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const showForm = (event) => {
@@ -75,10 +77,10 @@ export default function Community() {
             title: title,
             category: category,
             price: price,
-            user_id: tempOffereeId
+            user_id: currentUserId
         };
         try {
-            await axios.post('/offers', formData);
+            await axios.post('/offer', formData);
             alert(`Success! You should see your new offer when you refresh the page.`)
         } catch (error) {
             alert(`It looks like there was an error: ${error}`)
@@ -91,7 +93,7 @@ export default function Community() {
 
     const deleteOffer = async (id) => {
         try {
-            const response = await axios.delete(`/offers/${id}`);
+            const response = await axios.delete(`/offer/${id}`);
             console.log(response);
             alert(`Success! Your offer should be gone when you refresh the page.`)
         } catch (error) {
@@ -102,6 +104,7 @@ export default function Community() {
     return(
         <div>
             <h1>Community</h1>
+            
             <div className="community-content">
                 <div id="offers" className="community-column">
                     <h2 className="column-title">Offers</h2>
@@ -142,9 +145,9 @@ export default function Community() {
                         colors={['#4D6150', '#89886C', '#BAAC62', '#DA9F59', '#BF9E87']}
                     />
                     <div className="offers-container">
-                        {offers.map(offer => (
-                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} user={offerUsers[offer.id]} deleteOffer={deleteOffer}/>
-                        ))}
+                        {offers.map(offer => 
+                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} user={offerUsers[offer.id]} myOffer={offer.user_id === currentUserId} deleteOffer={deleteOffer}/>
+                        )}
                     </div>
                 </div>
                 <div id="members" className="community-column">
@@ -158,27 +161,45 @@ export default function Community() {
     )
 }
 
-function Offer({dbid, title, category, price, user, deleteOffer, ...props}) {
-    return(
-        <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
-            <div className="offer-row">
-                <h3 className="offer-title">{title}</h3>
-                <p>{price}</p>
+function Offer({dbid, title, category, price, user, myOffer, deleteOffer, ...props}) {
+    if (myOffer) {
+        return(
+            <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
+                <div className="offer-row">
+                    <h3 className="offer-title">{title}</h3>
+                    <p>{price}</p>
+                </div>
+                <div className="offer-row">
+                    <Link to="/profile" className="user">{user}</Link>
+                    <button onClick={() => deleteOffer(dbid)}>Delete</button>
+                </div>
             </div>
-            <div className="offer-row">
-                <Link to="/profile" className="user">{user}</Link>
-                <button>Request</button>
-                <button onClick={() => deleteOffer(dbid)}>Delete</button>
+        )
+    } else {
+        return(
+            <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
+                <div className="offer-row">
+                    <h3 className="offer-title">{title}</h3>
+                    <p>{price}</p>
+                </div>
+                <div className="offer-row">
+                    <Link to="/profile" className="user">{user}</Link>
+                    <button>Request</button>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 function Member({name, img, ...props}) {
     return(
-        <div className="member-mini">
+        <div className="member-mini" {...props}>
             <div className="member-image"/>
             <Link to="/profile">{name}</Link>
         </div>
     )
+}
+
+Community.propTypes = {
+    currentUserId: PropTypes.number.isRequired
 }

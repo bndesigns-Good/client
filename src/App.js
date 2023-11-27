@@ -3,34 +3,36 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Community from './components/Community';
 import Profile from './components/Profile';
-import Signup from './components/Signup'
+import Signup from './components/Signup';
+import Login from './components/Login';
+
+import useToken from './hooks/useToken';
 
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
-  // Example code for how to retrieve data from the server
-  //
-  // const [message, setMessage] = useState("");
-  
-  // useEffect(() => {
-  //   fetch("http://localhost:8000/message")
-  //   .then((res) => res.json())
-  //   .then((data) => setMessage(data.message));
-  // }, []);
+  const { token, currentUserId, logIn, logOut } = useToken()
 
-  return (
-    <div className="app">
-      <Navbar />
-      {/* <h1>{message}</h1> */}
-      <div className="content-container">
-        <Routes>
-          <Route path="/" element={<Community />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
+  if (token === "userAuthenticated") {
+    return (
+      <div className="app">
+        <Navbar logOut={logOut}/>
+        <div className="content-container">
+          <Routes>
+            <Route path="/" element={<Community currentUserId={currentUserId}/>} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
+        </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return ( 
+      <div className="content-container">
+        <Login logIn={logIn}/>
+      </div>
+    )
+  }
 }
 
 export default App;

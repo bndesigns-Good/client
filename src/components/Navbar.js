@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './components.css';
 
 import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar({ logOut }) {
     return(
         <nav className="nav">
             <Link to="/" className="site-title">Good</Link>
@@ -11,6 +12,7 @@ export default function Navbar() {
                 <InternalLink to="/">Community</InternalLink>
                 <InternalLink to="/profile">Profile</InternalLink>
                 <InternalLink to="/signup">Signup</InternalLink>
+                <button onClick={logOut}>Log out</button>
             </ul>
         </nav>
     )
@@ -25,4 +27,8 @@ function InternalLink({to, children, ...props}) {
             <Link to={to} {...props}>{children}</Link>
         </li>
     )
+}
+
+Navbar.propTypes = {
+    logOut: PropTypes.func.isRequired
 }

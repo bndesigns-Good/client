@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './components.css';
 
 export default function Signup() {
@@ -7,7 +8,11 @@ export default function Signup() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [name, setName] = useState("");
 
-    const handleSubmit = (event) => {
+    useEffect(() => {
+        axios.get('/users').then(response => console.log(response.data))
+    }, [])
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (password !== confirmPassword) {
             alert('Passwords do not match!')
@@ -18,10 +23,19 @@ export default function Signup() {
         const formData = {
             email: email,
             password: password,
-            confirmPassword: confirmPassword,
             name: name
         }
-        alert(`Email: ${formData.email}, password: ${formData.password}, name: ${formData.name}`);
+        try {
+            await axios.post('/user', formData);
+            alert(`Success! You've signed up for Good!`)
+        } catch (error) {
+            alert(`It looks like there was an error: ${error}`)
+        }
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setName("");
+        // Should probably refresh the page, so I probably don't have to clear the form data
     }
 
     return(
@@ -40,7 +54,7 @@ export default function Signup() {
                 <label>
                     Name <input name="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </label>
-                <button type="submit" class="form-button">Sign up</button>
+                <button type="submit" className="form-button">Sign up</button>
             </form>
         </div>
     )
