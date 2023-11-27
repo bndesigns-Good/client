@@ -152,24 +152,22 @@
     font-family: inherit;
     padding: 0.25rem;
 }
-.offerings-container {
+.loader-wrapper {
+    display: block;
+    margin: auto;
+}
+.offers-container {
     margin-top: 1rem;
     display: grid;
     grid-template-columns: 49% 49%;
     gap: 2%;
 }
-.offering-card {
+.offer-card {
     background-color: #FFFDFC;
     border-radius: 4px;
     padding: 0.75rem 1.25rem 0.5rem;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
     margin-bottom: 0.75rem;
-}
-.service {
-    border-left: 5px solid #DA9F59;
-}
-.assist {
-    border-left: 5px solid #BF9E87;
 }
 .good {
     border-left: 5px solid #89886C;
@@ -177,7 +175,13 @@
 .tool {
     border-left: 5px solid #BAAC62;
 }
-.offering-card button {
+.service {
+    border-left: 5px solid #DA9F59;
+}
+.assist {
+    border-left: 5px solid #BF9E87;
+}
+.offer-card button {
     padding: 0.5rem 0.75rem;
     border: none;
     background-color: #4D6150;
@@ -186,19 +190,19 @@
 
     transition: 200ms ease-out;
 }
-.offering-card button:hover {
+.offer-card button:hover {
     background-color: #1A3522;
 }
-.offering-row {
+.offer-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.375rem;
 }
-.offering-title {
+.offer-title {
     font-size: 17px;
 }
-.offeree {
+.user {
     text-decoration: none;
     color: inherit;
     font-family: 'DM Sans', sans-serif;
@@ -207,7 +211,7 @@
 
     transition: 200ms ease-out;
 }
-.offeree:hover {
+.user:hover {
     color: #2C4F5E;
 }
 .member-mini {

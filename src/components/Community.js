@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './components.css';
+import { ColorRing } from 'react-loader-spinner';
 
 import { Link } from 'react-router-dom';
 
 export default function Community() {
-    const [offerings, setOfferings] = useState([]);
+    const [offersLoaded, setOffersLoaded] = useState(false);
+    const [offers, setOffers] = useState([]);
+    const [offerUsers, setOfferUsers] = useState([]);
     const [formClass, setFormClass] = useState("hide");
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
@@ -14,26 +17,46 @@ export default function Community() {
     const [tempOffereeId, setTempOffereeId] = useState(1);
 
     useEffect(() => {
-        getOfferingsWithOfferees();
+        getOffersWithUsers();
         setTempOffereeId(1);
     }, []);
 
-    const getOfferingsWithOfferees = async () => {
+    const getOffersWithUsers = async () => {
+        const idPairs = [];
+        // Fetch and process the id pairs from the database
+        // Store the id of the user who made the offer at the index of the offer id
+        // Ex: User 3 makes offer 6
+        //     idPairs[6] = 3
         try {
-            const response = await axios.get('/offerings');
-            const offerings = response.data;
-            Promise.all(offerings.map(async (offering) => {
-                const offeree = await axios
-                    .get(`/user/${offering.offeree_id}`)
-                    .then(response => response.data.name)
-                    .catch(error => console.log(error));
-                offering.offeree = offeree;
-                return offering;
-            }))
-            .then(updatedOfferings => setOfferings(updatedOfferings));
+            const idPairsRaw = await axios.get('/offerusers').then(response => response.data);
+            for (let pair of idPairsRaw) {
+                idPairs[pair.id] = pair.user_id;
+            }
         } catch (error) {
-            console.log(error)
-        }      
+            console.log(error);
+        }
+
+        // Loop through the idPairs array and replace the user id with the user name
+        // Add the final list to the state
+        try {
+            for (let i = 0; i < idPairs.length; i++) {
+                if (idPairs[i]) {
+                    const name = await axios.get(`/user/${idPairs[i]}`).then(response => response.data.name);
+                    idPairs[i] = name;
+                }
+            }
+            setOfferUsers(idPairs);
+        } catch (error) {
+            console.log(error);
+        }
+        
+        // Get all the offers from the database and add them to the state
+        // Then turn off the offers loader
+        // Do this last so the user names will be loaded before the offers are rendered
+        await axios.get('/offers').then(response => response.data).then(offers => {
+            setOffers(offers);
+            setOffersLoaded(true);
+        });
     }
 
     const showForm = (event) => {
@@ -52,11 +75,11 @@ export default function Community() {
             title: title,
             category: category,
             price: price,
-            offeree_id: tempOffereeId
+            user_id: tempOffereeId
         };
         try {
-            await axios.post('/offerings', formData);
-            alert(`Success! You should see your new offering when you refresh the page.`)
+            await axios.post('/offers', formData);
+            alert(`Success! You should see your new offer when you refresh the page.`)
         } catch (error) {
             alert(`It looks like there was an error: ${error}`)
         }
@@ -68,9 +91,9 @@ export default function Community() {
 
     const deleteOffer = async (id) => {
         try {
-            const response = await axios.delete(`/offerings/${id}`);
+            const response = await axios.delete(`/offers/${id}`);
             console.log(response);
-            alert(`Success! Your offering should be gone when you refresh the page.`)
+            alert(`Success! Your offer should be gone when you refresh the page.`)
         } catch (error) {
             alert(`It looks like there was an error: ${error}`)
         }
@@ -80,9 +103,9 @@ export default function Community() {
         <div>
             <h1>Community</h1>
             <div className="community-content">
-                <div id="offerings" className="community-column">
-                    <h2 className="column-title">Offerings</h2>
-                    <p className="column-description">See all that your community has to offer! Offerings fall under four categories: services, assists, goods, and tools.</p>
+                <div id="offers" className="community-column">
+                    <h2 className="column-title">Offers</h2>
+                    <p className="column-description">See all that your community has to offer! Offers fall under four categories: services, assists, goods, and tools.</p>
                     <button className="primary-button" onClick={showForm}>Create offer</button>
                     <form className={`create-offer-form ${formClass}`} onSubmit={handleSubmit}>
                         <div className="form-header">
@@ -109,9 +132,18 @@ export default function Community() {
                         </label>
                         <button type="submit" className="form-button">Submit</button>
                     </form>
-                    <div className="offerings-container">
-                        {offerings.map(offer => (
-                            <Offering key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} offeree={offer.offeree} deleteOffer={deleteOffer}/>
+                    <ColorRing
+                        visible={!offersLoaded}
+                        height="175"
+                        width="175"
+                        ariaLabel="offers-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="loader-wrapper"
+                        colors={['#4D6150', '#89886C', '#BAAC62', '#DA9F59', '#BF9E87']}
+                    />
+                    <div className="offers-container">
+                        {offers.map(offer => (
+                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} user={offerUsers[offer.id]} deleteOffer={deleteOffer}/>
                         ))}
                     </div>
                 </div>
@@ -126,15 +158,15 @@ export default function Community() {
     )
 }
 
-function Offering({dbid, title, category, price, offeree, deleteOffer, ...props}) {
+function Offer({dbid, title, category, price, user, deleteOffer, ...props}) {
     return(
-        <div id={`offering-${dbid}`} className={`offering-card ${category}`} {...props}>
-            <div className="offering-row">
-                <h3 className="offering-title">{title}</h3>
+        <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
+            <div className="offer-row">
+                <h3 className="offer-title">{title}</h3>
                 <p>{price}</p>
             </div>
-            <div className="offering-row">
-                <Link to="/profile" className="offeree">{offeree}</Link>
+            <div className="offer-row">
+                <Link to="/profile" className="user">{user}</Link>
                 <button>Request</button>
                 <button onClick={() => deleteOffer(dbid)}>Delete</button>
             </div>
