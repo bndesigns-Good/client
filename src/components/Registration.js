@@ -54,7 +54,7 @@ export default function Registration({ logIn }) {
         }
     }
     
-    // Set the path to '/' whenever you view the registration screen
+    // Make sure we're at the root path whenever we view the registration screen
     if (window.location.pathname !== "/") {
         window.location.replace('/')
     }

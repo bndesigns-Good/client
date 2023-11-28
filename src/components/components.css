@@ -174,7 +174,7 @@ button {
     margin: auto;
 }
 .offers-container {
-    margin-top: 1rem;
+    margin-top: 15px;
     display: grid;
     grid-template-columns: 49% 49%;
     gap: 2%;
@@ -199,17 +199,23 @@ button {
 .assist {
     border-left: 5px solid #BF9E87;
 }
-.offer-card button {
-    padding: 0.5rem 0.75rem;
-    border: none;
+.offer-card-button {
+    padding: 7.5px 15px;
     background-color: #4D6150;
     border-radius: 2px;
     color: #F8F3EA;
-
-    transition: 200ms ease-out;
 }
-.offer-card button:hover {
+.offer-card-button:hover {
     background-color: #1A3522;
+}
+.offer-card-delete{
+    padding: 5px 15px;
+    background-color: #CA706A;
+    border-radius: 2px;
+    color: #F8F3EA;
+}
+.offer-card-delete:hover {
+    background-color: #A73E37;
 }
 .offer-row {
     display: flex;
@@ -245,6 +251,13 @@ button {
     width: 70px;
     border-radius: 35px;
     background-color: #4D6150;
+    display: flex;
+}
+.member-image span {
+    width: fit-content;
+    margin: auto;
+    font-size: 3rem;
+    color: #F8F3EA;
 }
 .member-mini a {
     text-decoration: none;
@@ -262,26 +275,66 @@ button {
 /* Profile */
 /* ******* */
 .profile-top-section {
-    margin-top: 1rem;
+    margin-top: 20px;
+    padding: 20px 25px 30px;
     display: grid;
     grid-template-columns: 10% 90%;
     align-items: center;
+    background-color: #FFFDFC;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
 }
-
 .profile-info {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 10px;
 }
-
 .info-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
+.info-header button {
+    margin: 0;
+}
+.edit-profile-form {
+    flex-direction: column;
+    gap: 10px;
+    background-color: #FFFDFC;
+    border-radius: 8px;
+    padding: 20px 50px;
+    margin: auto;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+}
+.edit-profile-form label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    width: 300px;
+}
+.edit-profile-form input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    font-family: inherit;
+    padding: 5px;
+}
 .pronouns {
     color: #89886C;
+}
+.year-joined {
+    font-style: italic;
+}
+.profile-bottom-section {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    margin-top: 30px;
+}
+.column-title {
+    margin-bottom: 5px;
+}
+.notifications-container {
+    margin-top: 15px;
 }
 
 /* ************ */

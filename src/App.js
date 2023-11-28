@@ -19,7 +19,7 @@ function App() {
         <div className="content-container">
           <Routes>
             <Route path="/" element={<Community currentUserId={currentUserId} />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile currentUserId={currentUserId} />} />
           </Routes>
         </div>
       </div>

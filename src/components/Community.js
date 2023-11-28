@@ -171,7 +171,9 @@ function Offer({dbid, title, category, price, user, myOffer, deleteOffer, ...pro
                 </div>
                 <div className="offer-row">
                     <Link to="/profile" className="user">{user}</Link>
-                    <button onClick={() => deleteOffer(dbid)}>Delete</button>
+                    <button className="offer-card-delete" onClick={() => deleteOffer(dbid)}>
+                        <span className="material-symbols-outlined">delete</span>
+                    </button>
                 </div>
             </div>
         )
@@ -184,7 +186,7 @@ function Offer({dbid, title, category, price, user, myOffer, deleteOffer, ...pro
                 </div>
                 <div className="offer-row">
                     <Link to="/profile" className="user">{user}</Link>
-                    <button>Request</button>
+                    <button className="offer-card-button">Request</button>
                 </div>
             </div>
         )
