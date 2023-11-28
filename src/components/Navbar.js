@@ -11,7 +11,6 @@ export default function Navbar({ logOut }) {
             <ul>
                 <InternalLink to="/">Community</InternalLink>
                 <InternalLink to="/profile">Profile</InternalLink>
-                <InternalLink to="/signup">Signup</InternalLink>
                 <button onClick={logOut}>Log out</button>
             </ul>
         </nav>

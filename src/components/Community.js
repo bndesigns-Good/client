@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import './components.css';
 import { ColorRing } from 'react-loader-spinner';
@@ -16,8 +15,8 @@ export default function Community({ currentUserId }) {
     const [price, setPrice] = useState(0);
 
     useEffect(() => {
-        getOffersWithUsers();
-    }, []);
+        getOffersWithUsers()
+    }, [])
 
     const getOffersWithUsers = async () => {
         const idPairs = [];
@@ -81,24 +80,23 @@ export default function Community({ currentUserId }) {
         };
         try {
             await axios.post('/offer', formData);
-            alert(`Success! You should see your new offer when you refresh the page.`)
         } catch (error) {
             alert(`It looks like there was an error: ${error}`)
         }
         setTitle("");
         setCategory("");
         setPrice(0);
-        setFormClass("hide");
+        setFormClass("hide")
+        getOffersWithUsers()
     }
 
     const deleteOffer = async (id) => {
         try {
-            const response = await axios.delete(`/offer/${id}`);
-            console.log(response);
-            alert(`Success! Your offer should be gone when you refresh the page.`)
+            await axios.delete(`/offer/${id}`);
         } catch (error) {
             alert(`It looks like there was an error: ${error}`)
         }
+        getOffersWithUsers()
     }
 
     return(
@@ -110,31 +108,33 @@ export default function Community({ currentUserId }) {
                     <h2 className="column-title">Offers</h2>
                     <p className="column-description">See all that your community has to offer! Offers fall under four categories: services, assists, goods, and tools.</p>
                     <button className="primary-button" onClick={showForm}>Create offer</button>
-                    <form className={`create-offer-form ${formClass}`} onSubmit={handleSubmit}>
-                        <div className="form-header">
-                            <h2>Create a new offer</h2>
-                            <button className="close-button" onClick={hideForm}>
-                                <span className="material-symbols-outlined">close</span>
-                            </button>
-                        </div>
-                        <label>
-                            Title <input name="title" value={title} onChange={(e) => setTitle(e.target.value)}/>
-                        </label>
-                        <label>
-                            Category
-                            <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
-                                <option value="" disabled>Please select a category</option>
-                                <option value="service">Service</option>
-                                <option value="assist">Assist</option>
-                                <option value="good">Good</option>
-                                <option value="tool">Tool</option>
-                            </select>
-                        </label>
-                        <label>
-                            Price <input name="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)}/>
-                        </label>
-                        <button type="submit" className="form-button">Submit</button>
-                    </form>
+                    <div className={`popup-container ${formClass}`}>
+                        <form className={`create-offer-form ${formClass}`} onSubmit={handleSubmit}>
+                            <div className="form-header">
+                                <h2>Create a new offer</h2>
+                                <button className="close-button" onClick={hideForm}>
+                                    <span className="material-symbols-outlined">close</span>
+                                </button>
+                            </div>
+                            <label>
+                                Title <input name="title" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                            </label>
+                            <label>
+                                Category
+                                <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+                                    <option value="" disabled>Please select a category</option>
+                                    <option value="service">Service</option>
+                                    <option value="assist">Assist</option>
+                                    <option value="good">Good</option>
+                                    <option value="tool">Tool</option>
+                                </select>
+                            </label>
+                            <label>
+                                Price <input name="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)}/>
+                            </label>
+                            <button type="submit" className="form-button">Submit</button>
+                        </form>
+                    </div>
                     <ColorRing
                         visible={!offersLoaded}
                         height="175"
@@ -167,7 +167,7 @@ function Offer({dbid, title, category, price, user, myOffer, deleteOffer, ...pro
             <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
                 <div className="offer-row">
                     <h3 className="offer-title">{title}</h3>
-                    <p>{price}</p>
+                    <p>${price}</p>
                 </div>
                 <div className="offer-row">
                     <Link to="/profile" className="user">{user}</Link>
@@ -180,7 +180,7 @@ function Offer({dbid, title, category, price, user, myOffer, deleteOffer, ...pro
             <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
                 <div className="offer-row">
                     <h3 className="offer-title">{title}</h3>
-                    <p>{price}</p>
+                    <p>${price}</p>
                 </div>
                 <div className="offer-row">
                     <Link to="/profile" className="user">{user}</Link>
@@ -198,8 +198,4 @@ function Member({name, img, ...props}) {
             <Link to="/profile">{name}</Link>
         </div>
     )
-}
-
-Community.propTypes = {
-    currentUserId: PropTypes.number.isRequired
 }
