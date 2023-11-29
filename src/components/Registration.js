@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './components.css';
+import './index.css';
 
 export default function Registration({ logIn }) {
     // Different email and password states for Login and Signup
@@ -63,7 +63,7 @@ export default function Registration({ logIn }) {
         <div className="registration">
             <h1>Welcome. Let's do some good.</h1>
             <div className="registration-form">
-                <div className="registration-switch">
+                <div className="switch">
                     <button className={loginSelected === "selected" ? "active-switch" : "inactive-switch"} onClick={() => {
                         setLoginSelected("selected")
                         setSignupSelected("")

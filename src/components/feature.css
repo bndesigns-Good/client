@@ -1,57 +1,8 @@
-.material-symbols-outlined {
-    display: block;
-}
+/* Feature.css */
+/* Styles for each feature of the application */
 
-/* ********** */
-/* Components */
-/* ********** */
-button {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    font-size: 0.875rem;
-    border: none;
-
-    transition: 200ms ease-out;
-}
-.primary-button {
-    background-color: #4D6150;
-    padding: 0.75rem 1rem;
-    border-radius: 4px;
-    color: #FFFDFC;
-    font-weight: 500;
-    font-size: 0.875rem;
-}
-.primary-button:hover {
-    background-color: #1A3522;
-    cursor: pointer;
-}
-.form-button {
-    background-color: #447EAE;
-    padding: 10px 20px;
-    border-radius: 2px;
-    color: #FFFDFC;
-    width: fit-content;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-.form-button:hover {
-    background-color: #1A6AA4;
-    cursor: pointer;
-}
-.close-button {
-    background-color: transparent;
-
-    transition: 200ms ease-out;
-}
-
-.close-button:hover {
-    color:#1A6AA4;
-    cursor: pointer;
-}
-
-/* ****** */
 /* Navbar */
-/* ****** */
+
 .nav {
     display: flex;
     justify-content: space-between;
@@ -62,7 +13,7 @@ button {
     position: sticky;
     top: 0;
     z-index: 50;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 .nav a {
     text-decoration: none;
@@ -88,10 +39,10 @@ button {
     transition: 200ms ease-out;
 }
 .nav li.active {
-    text-decoration: underline;
+    background-color: #E4D9D4;
 }
-.nav li:hover {
-    color: #447EAE;
+.nav li:not(.active):hover {
+    background-color: #F0E9E5;
 }
 .nav button {
     background-color: transparent;
@@ -101,14 +52,14 @@ button {
     font-family: 'DM Sans', sans-serif;
     font-size: 1.125rem;
     transition: 200ms ease-out;
+    box-shadow: none;
 }
 .nav button:hover {
-    color: #447EAE;
+    background-color: #F0E9E5;
 }
 
-/* ********* */
 /* Community */
-/* ********* */
+
 .community-content {
     margin-top: 1rem;
     display: grid;
@@ -123,16 +74,6 @@ button {
 .column-description {
     margin-bottom: 0.5rem;
 }
-.popup-container {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 50;
-    background-color: rgba(19, 23, 20, 0.9);
-    backdrop-filter: blur(5px);
-}
 .create-offer-form {
     flex-direction: column;
     gap: 10px;
@@ -142,12 +83,6 @@ button {
     margin: auto;
     align-items: center;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
-}
-.hide {
-    display: none;
-}
-.show {
-    display: flex;
 }
 .form-header {
     display: flex;
@@ -181,47 +116,30 @@ button {
 }
 .offer-card {
     background-color: #FFFDFC;
-    border-radius: 4px;
-    padding: 0.75rem 1.25rem 0.5rem;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    padding: 10px 15px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 0.75rem;
-    border-left: 5px solid #ACA8A7;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .good {
-    border-left: 5px solid #89886C;
-}
-.tool {
-    border-left: 5px solid #BAAC62;
+    border-left: 5px solid #FECA43;
 }
 .service {
-    border-left: 5px solid #DA9F59;
-}
-.assist {
-    border-left: 5px solid #BF9E87;
-}
-.offer-card-button {
-    padding: 7.5px 15px;
-    background-color: #4D6150;
-    border-radius: 2px;
-    color: #F8F3EA;
-}
-.offer-card-button:hover {
-    background-color: #1A3522;
-}
-.offer-card-delete{
-    padding: 5px 15px;
-    background-color: #CA706A;
-    border-radius: 2px;
-    color: #F8F3EA;
-}
-.offer-card-delete:hover {
-    background-color: #A73E37;
+    border-left: 5px solid #FA9F4B;
 }
 .offer-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.375rem;
+}
+.offer-row-2 {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 15px;
 }
 .offer-title {
     font-size: 17px;
@@ -271,9 +189,8 @@ button {
     color: #1A6AA4;
 }
 
-/* ******* */
 /* Profile */
-/* ******* */
+
 .profile-top-section {
     margin-top: 20px;
     padding: 20px 25px 30px;
@@ -281,8 +198,7 @@ button {
     grid-template-columns: 10% 90%;
     align-items: center;
     background-color: #FFFDFC;
-    border-radius: 8px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 .profile-info {
     display: flex;
@@ -312,7 +228,8 @@ button {
     font-size: 0.875rem;
     width: 300px;
 }
-.edit-profile-form input {
+.edit-profile-form input,
+.edit-profile-form textarea {
     width: 100%;
     box-sizing: border-box;
     margin-top: 5px;
@@ -337,9 +254,8 @@ button {
     margin-top: 15px;
 }
 
-/* ************ */
 /* Registration */
-/* ************ */
+
 .registration {
     margin: 50px 0;
 }
@@ -354,29 +270,6 @@ button {
     padding: 20px 50px;
     width: 400px;
     margin: auto;
-}
-.registration-switch {
-    display: flex;
-    gap: 20px;
-    width: fit-content;
-    margin: auto;
-}
-.active-switch {
-    padding: 10px 30px;
-    background-color: #1A3522;
-    color: #FFFDFC;
-    border-radius: 24px;
-}
-.inactive-switch {
-    padding: 10px 30px;
-    background-color: #94A395;
-    color: #FFFDFC;
-    border-radius: 24px;
-}
-.inactive-switch:hover {
-    color: #FFFDFC;
-    background-color: #1A3522;
-    cursor: pointer;
 }
 .signup-form,
 .login-form {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './components.css';
+import './index.css';
 import { ColorRing } from 'react-loader-spinner';
 
 import { Link } from 'react-router-dom';
@@ -123,10 +123,8 @@ export default function Community({ currentUserId }) {
                                 Category
                                 <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
                                     <option value="" disabled>Please select a category</option>
-                                    <option value="service">Service</option>
-                                    <option value="assist">Assist</option>
                                     <option value="good">Good</option>
-                                    <option value="tool">Tool</option>
+                                    <option value="service">Service</option>
                                 </select>
                             </label>
                             <label>
@@ -169,9 +167,11 @@ function Offer({dbid, title, category, price, user, myOffer, deleteOffer, ...pro
                     <h3 className="offer-title">{title}</h3>
                     <p>${price}</p>
                 </div>
-                <div className="offer-row">
-                    <Link to="/profile" className="user">{user}</Link>
-                    <button className="offer-card-delete" onClick={() => deleteOffer(dbid)}>
+                <div className="offer-row-2">
+                    <button className="edit-button" onClick={() => console.log('Editing offer...')}>
+                        <span className="material-symbols-outlined">edit_square</span>
+                    </button>
+                    <button className="delete-button" onClick={() => deleteOffer(dbid)}>
                         <span className="material-symbols-outlined">delete</span>
                     </button>
                 </div>
@@ -186,7 +186,9 @@ function Offer({dbid, title, category, price, user, myOffer, deleteOffer, ...pro
                 </div>
                 <div className="offer-row">
                     <Link to="/profile" className="user">{user}</Link>
-                    <button className="offer-card-button">Request</button>
+                    <button className="edit-button">
+                        <span className="material-symbols-outlined">concierge</span>
+                    </button>
                 </div>
             </div>
         )

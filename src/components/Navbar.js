@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './components.css';
+import './index.css';
 
 import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 

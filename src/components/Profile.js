@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './components.css';
+import './index.css';
 
 
 export default function Profile({ currentUserId }) {
@@ -14,7 +14,7 @@ export default function Profile({ currentUserId }) {
     useEffect(() => {
         getCurrentUser(currentUserId)
         getUsersOffers(currentUserId)
-    }, [])
+    }, [currentUserId])
 
     const getCurrentUser = async (id) => {
         try {
@@ -34,16 +34,18 @@ export default function Profile({ currentUserId }) {
         setFormClass("hide");
     }
 
-    const editUser = async (id) => {
+    const editUser = async (event) => {
+        event.preventDefault()
         const formData = {
             name: name,
             pronouns: pronouns,
             bio: bio
         };
         try {
-            await axios.patch(`/user/${id}`, formData);
+            await axios.patch(`/user/${currentUserId}`, formData);
         } catch (error) {
-            alert(`It looks like there was an error: ${error}`)
+            console.log(error)
+            alert(`It looks like there was a problem updating your profile. Be sure to double check your info before submitting.`)
         }
         setName("");
         setPronouns("");
@@ -81,9 +83,11 @@ export default function Profile({ currentUserId }) {
                             <h2>{currentUser.name}</h2>
                             <p className="pronouns">{currentUser.pronouns}</p>
                         </div>
-                        <button className="primary-button" onClick={showForm}>Edit</button>
+                        <button className="primary-button" onClick={showForm}>
+                            <span className="material-symbols-outlined">edit_square</span>
+                        </button>
                         <div className={`popup-container ${formClass}`}>
-                            <form className={`edit-profile-form ${formClass}`} onSubmit={() => editUser(currentUserId)}>
+                            <form className={`edit-profile-form ${formClass}`} onSubmit={editUser}>
                                 <div className="form-header">
                                     <h2>Edit your profile</h2>
                                     <button className="close-button" onClick={hideForm}>
@@ -97,7 +101,7 @@ export default function Profile({ currentUserId }) {
                                     Pronouns <input name="pronouns" value={pronouns} onChange={(e) => setPronouns(e.target.value)} />
                                 </label>
                                 <label>
-                                    Bio <input name="bio" value={bio} onChange={(e) => setBio(e.target.value)}/>
+                                    Bio <textarea name="bio" value={bio} onChange={(e) => setBio(e.target.value)}/>
                                 </label>
                                 <button type="submit" className="form-button">Submit</button>
                             </form>
@@ -133,9 +137,11 @@ function Offer({dbid, title, category, price, deleteOffer, ...props}) {
                 <h3 className="offer-title">{title}</h3>
                 <p>${price}</p>
             </div>
-            <div className="offer-row">
-                <button className="offer-card-button" onClick={() => console.log('Editing offer...')}>Edit</button>
-                <button className="offer-card-delete" onClick={() => deleteOffer(dbid)}>
+            <div className="offer-row-2">
+                <button className="edit-button" onClick={() => console.log('Editing offer...')}>
+                    <span className="material-symbols-outlined">edit_square</span>
+                </button>
+                <button className="delete-button" onClick={() => deleteOffer(dbid)}>
                     <span className="material-symbols-outlined">delete</span>
                 </button>
             </div>
