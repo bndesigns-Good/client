@@ -60,43 +60,57 @@ export default function Registration({ logIn }) {
     }
 
     return(
-        <div className="registration">
-            <h1>Welcome. Let's do some good.</h1>
-            <div className="registration-form">
-                <div className="switch">
-                    <button className={loginSelected === "selected" ? "active-switch" : "inactive-switch"} onClick={() => {
-                        setLoginSelected("selected")
-                        setSignupSelected("")
-                    }}>Login</button>
-                    <button className={signupSelected === "selected" ? "active-switch" : "inactive-switch"} onClick={() => {
-                        setSignupSelected("selected")
-                        setLoginSelected("")
-                    }}>Signup</button>
+        <div className="landing">
+            <div className="registration">
+                <h1>Welcome. Let's do some good.</h1>
+                <div className="registration-form">
+                    <div className="switch">
+                        <button className={loginSelected === "selected" ? "active-switch" : "inactive-switch"} onClick={() => {
+                            setLoginSelected("selected")
+                            setSignupSelected("")
+                        }}>Login</button>
+                        <button className={signupSelected === "selected" ? "active-switch" : "inactive-switch"} onClick={() => {
+                            setSignupSelected("selected")
+                            setLoginSelected("")
+                        }}>Signup</button>
+                    </div>
+                    <form className={`login-form ${loginSelected}`} onSubmit={handleLogin}>
+                        <label>
+                            Email <input name="email" type="email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} />
+                        </label>
+                        <label>
+                            Password <input name="password" type="password" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} />
+                        </label>
+                        <button type="submit" className="form-button">Log in</button>
+                    </form>
+                    <form className={`signup-form ${signupSelected}`} onSubmit={handleSignup}>
+                        <label>
+                            Email <input name="email" type="email" value={signupEmail} onChange={(e) => setSignupEmail(e.target.value)} />
+                        </label>
+                        <label>
+                            Password <input name="password" type="password" value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} />
+                        </label>
+                        <label>
+                            Confirm password <input name="confirm-password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                        </label>
+                        <label>
+                            Name <input name="name" value={name} onChange={(e) => setName(e.target.value)} />
+                        </label>
+                        <button type="submit" className="form-button">Sign up</button>
+                    </form>
                 </div>
-                <form className={`login-form ${loginSelected}`} onSubmit={handleLogin}>
-                    <label>
-                        Email <input name="email" type="email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} />
-                    </label>
-                    <label>
-                        Password <input name="password" type="password" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} />
-                    </label>
-                    <button type="submit" className="form-button">Log in</button>
-                </form>
-                <form className={`signup-form ${signupSelected}`} onSubmit={handleSignup}>
-                    <label>
-                        Email <input name="email" type="email" value={signupEmail} onChange={(e) => setSignupEmail(e.target.value)} />
-                    </label>
-                    <label>
-                        Password <input name="password" type="password" value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} />
-                    </label>
-                    <label>
-                        Confirm password <input name="confirm-password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                    </label>
-                    <label>
-                        Name <input name="name" value={name} onChange={(e) => setName(e.target.value)} />
-                    </label>
-                    <button type="submit" className="form-button">Sign up</button>
-                </form>
+            </div>
+            <div class="learn-more">
+                <h2>What is Good?</h2>
+                <div className="main-text">
+                    <p>Good builds a more sustainable future by:</p>
+                    <ul>
+                        <li>Connecting people with their local communities</li>
+                        <li>Helping people share goods and services</li>
+                    </ul>
+                    <p>Local communities include neighboorhoods, apartment buildings, and even dorms. Imagine, you bought too many oranges, and they're about to go bad. Good helps you easily share them with your friends or neighbors, reducing food waste. That's only one example of how Good is promoting a more sustainable future.</p>
+                </div>
+                <img src="logo1.0.png" alt="Good logo, which depicts a sprout emerging from a boot." className="landing-logo"/>
             </div>
         </div>
     )

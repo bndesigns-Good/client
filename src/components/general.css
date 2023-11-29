@@ -38,7 +38,7 @@ button:hover {
 
 .form-button {
     background-color: #447EAE;
-    padding: 10px 20px;
+    padding: 8px 16px;
     color: #FFFDFC;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
@@ -107,20 +107,21 @@ button:hover {
 
 .switch {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     width: fit-content;
     margin: auto;
+    margin-bottom: 15px;
 }
 
 .active-switch {
-    padding: 10px 30px;
+    padding: 8px 20px;
     background-color: #1A3522;
     color: #FFFDFC;
     border-radius: 24px;
 }
 
 .inactive-switch {
-    padding: 10px 30px;
+    padding: 8px 20px;
     background-color: #94A395;
     color: #FFFDFC;
     border-radius: 24px;
@@ -129,4 +130,36 @@ button:hover {
     color: #FFFDFC;
     background-color: #1A3522;
     cursor: pointer;
+}
+
+/* Lists */
+
+ul {
+    padding: 0;
+    margin: 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding-left: 18px;
+}
+
+@media (min-width: 768px) {
+    .form-button {
+        padding: 10px 20px;
+    }
+    .switch {
+        gap: 20px;
+    }
+    .active-switch {
+        padding: 10px 30px;
+    }
+    .inactive-switch {
+        padding: 10px 30px;
+    }
+}
+
+@media (min-width: 1024px) {
+    ul {
+        font-size: 16px;
+        padding-left: 20px;
+    }
 }
