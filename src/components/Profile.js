@@ -10,6 +10,8 @@ export default function Profile({ currentUserId }) {
     const [name, setName] = useState("")
     const [pronouns, setPronouns] = useState("")
     const [bio, setBio] = useState("")
+    const [ppFile, setPpFile] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         getCurrentUser(currentUserId)
@@ -54,6 +56,21 @@ export default function Profile({ currentUserId }) {
         getCurrentUser(currentUserId)
     }
 
+    const uploadPhoto  = async () => {
+        try {
+            setLoading(true);
+            const data = new FormData();
+            data.append("my_file", ppFile);
+            const response = await axios.post('/upload', data)
+            await axios.patch(`/image/${currentUserId}`, response.data)
+            getCurrentUser(currentUserId)
+        } catch (error) {
+            alert(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     const getUsersOffers = async (id) => {
         try {
             await axios.get(`/offers/${id}`).then(response => setUsersOffers(response.data))
@@ -74,9 +91,7 @@ export default function Profile({ currentUserId }) {
     return(
         <div>
             <div className="profile-top-section">
-                <div className="member-image">
-                    <span className="material-symbols-outlined">person</span>
-                </div>
+                <img src={currentUser.pp_url} className="profile-photo" alt="Profile" />
                 <div className="profile-info">
                     <div className="info-header">
                         <div>
@@ -109,6 +124,18 @@ export default function Profile({ currentUserId }) {
                     </div>
                     <p>{currentUser.bio}</p>
                 </div>
+            </div>
+            <div>
+                <label htmlFor="file">{" "} Select file</label>
+                {ppFile && <center> {ppFile.name}</center>}
+                <input id="file" type="file" onChange={(e) => setPpFile(e.target.files[0])} multiple={false} />
+                {ppFile && (
+                    <>
+                        <button onClick={uploadPhoto} className="form-button">
+                            {loading ? "Uploading..." : "Upload to Cloudinary"}
+                        </button>
+                    </>
+                )}
             </div>
             <div className="profile-bottom-section">
                 <div className="profile-column">

@@ -195,7 +195,7 @@
     margin-top: 20px;
     padding: 20px 25px 30px;
     display: grid;
-    grid-template-columns: 10% 90%;
+    grid-template-columns: 25% 75%;
     align-items: center;
     background-color: #FFFDFC;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -235,6 +235,10 @@
     margin-top: 5px;
     font-family: inherit;
     padding: 5px;
+}
+.profile-photo {
+    width: 160px;
+    border-radius: 80px;
 }
 .pronouns {
     color: #89886C;
