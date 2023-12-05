@@ -9,6 +9,7 @@ export default function Community({ currentUserId }) {
     const [offersLoaded, setOffersLoaded] = useState(false);
     const [offers, setOffers] = useState([]);
     const [offerUsers, setOfferUsers] = useState([]);
+    const [users, setUsers] = useState([]);
     const [formClass, setFormClass] = useState("hide");
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
@@ -16,6 +17,7 @@ export default function Community({ currentUserId }) {
 
     useEffect(() => {
         getOffersWithUsers()
+        getUsers()
     }, [])
 
     const getOffersWithUsers = async () => {
@@ -57,6 +59,14 @@ export default function Community({ currentUserId }) {
             });
         } catch (error) {
             console.log(error);
+        }
+    }
+    
+    const getUsers = async () => {
+        try {
+            await axios.get('/users').then(response => setUsers(response.data))
+        } catch (error) {
+            alert(error.message)
         }
     }
 
@@ -148,11 +158,13 @@ export default function Community({ currentUserId }) {
                         )}
                     </div>
                 </div>
-                <div id="members" className="community-column">
+                <div id="members" className="community-column-2">
                     <h2 className="column-title">Members</h2>
-                    <Member name="Brennan" />
-                    <Member name="Brennan" />
-                    <Member name="Brennan" />
+                    <div className="users-container">
+                        {users.map(user => 
+                            <Member key={user.id} dbid={user.id} name={user.name} img={user.pp_url}/>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
@@ -195,11 +207,17 @@ function Offer({dbid, title, category, price, user, myOffer, deleteOffer, ...pro
     }
 }
 
-function Member({name, img, ...props}) {
+function Member({dbid, name, img, ...props}) {
     return(
-        <div className="member-mini" {...props}>
-            <div className="member-image"/>
-            <Link to="/profile">{name}</Link>
-        </div>
+        img == null ?
+            <div className="member-mini" {...props}>
+                <img src="logo1.0.png" alt="Profile" />
+                <Link to={`/profile/${dbid}`}>{name}</Link>
+            </div>
+        :
+            <div className="member-mini" {...props}>
+                <img src={img} alt="Profile" />
+                <Link to={`/profile/${dbid}`}>{name}</Link>
+            </div>
     )
 }

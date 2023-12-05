@@ -15,11 +15,11 @@ function App() {
   if (token === "userAuthenticated") {
     return (
       <div className="app">
-        <Navbar logOut={logOut}/>
+        <Navbar logOut={logOut} currentUserId={currentUserId} />
         <div className="content-container">
           <Routes>
             <Route path="/" element={<Community currentUserId={currentUserId} />} />
-            <Route path="/profile" element={<Profile currentUserId={currentUserId} />} />
+            <Route path="/profile/:id" element={<Profile currentUserId={currentUserId} />} />
           </Routes>
         </div>
       </div>

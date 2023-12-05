@@ -39,10 +39,10 @@
     transition: 200ms ease-out;
 }
 .nav li.active {
-    background-color: #E4D9D4;
+    background-color: #ECE4E0;
 }
 .nav li:not(.active):hover {
-    background-color: #F0E9E5;
+    background-color: #F6F3F2;
 }
 .nav button {
     background-color: transparent;
@@ -156,32 +156,35 @@
 .user:hover {
     color: #1A6AA4;
 }
+.users-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 15px;
+    background-color: #FDFBF9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 30px 10px 35px;
+    max-width: 150px;
+}
 .member-mini {
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    width: 80px;
+    gap: 5px;
     text-align: center;
-    margin-top: 1rem;
-    gap: 0.25rem;
-}
-.member-image {
-    height: 70px;
-    width: 70px;
-    border-radius: 35px;
-    background-color: #4D6150;
-    display: flex;
-}
-.member-image span {
-    width: fit-content;
     margin: auto;
-    font-size: 3rem;
-    color: #F8F3EA;
+}
+.member-mini img {
+    width: 80px;
+    border-radius: 40px;
 }
 .member-mini a {
     text-decoration: none;
-    color: inherit;
     font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
     color: #447EAE;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     transition: 200ms ease-out;
 }
@@ -245,6 +248,15 @@
 }
 .year-joined {
     font-style: italic;
+}
+.pp-uploader {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: "DM Sans", sans-serif;
+    border-bottom: 2px solid #E4D9D4;
+    padding-bottom: 20px;
 }
 .profile-bottom-section {
     display: grid;

@@ -4,13 +4,13 @@ import './index.css';
 
 import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 
-export default function Navbar({ logOut }) {
+export default function Navbar({ logOut, currentUserId }) {
     return(
         <nav className="nav">
             <Link to="/" className="site-title">Good</Link>
             <ul>
                 <InternalLink to="/">Community</InternalLink>
-                <InternalLink to="/profile">Profile</InternalLink>
+                <InternalLink to={`/profile/${currentUserId}`}>Profile</InternalLink>
                 <button onClick={logOut}>Log out</button>
             </ul>
         </nav>

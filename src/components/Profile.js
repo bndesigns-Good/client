@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './index.css';
+import { useParams } from 'react-router-dom';
 
 
 export default function Profile({ currentUserId }) {
@@ -13,10 +14,12 @@ export default function Profile({ currentUserId }) {
     const [ppFile, setPpFile] = useState(null)
     const [loading, setLoading] = useState(false)
 
+    const params = useParams()
+
     useEffect(() => {
-        getCurrentUser(currentUserId)
-        getUsersOffers(currentUserId)
-    }, [currentUserId])
+        getCurrentUser(params.id)
+        getUsersOffers(params.id)
+    }, [params.id])
 
     const getCurrentUser = async (id) => {
         try {
@@ -98,9 +101,11 @@ export default function Profile({ currentUserId }) {
                             <h2>{currentUser.name}</h2>
                             <p className="pronouns">{currentUser.pronouns}</p>
                         </div>
-                        <button className="primary-button" onClick={showForm}>
-                            <span className="material-symbols-outlined">edit_square</span>
-                        </button>
+                        {currentUserId.toString() === params.id && 
+                            <button className="primary-button" onClick={showForm}>
+                                <span className="material-symbols-outlined">edit_square</span>
+                            </button>
+                        }
                         <div className={`popup-container ${formClass}`}>
                             <form className={`edit-profile-form ${formClass}`} onSubmit={editUser}>
                                 <div className="form-header">
@@ -125,18 +130,20 @@ export default function Profile({ currentUserId }) {
                     <p>{currentUser.bio}</p>
                 </div>
             </div>
-            <div>
-                <label htmlFor="file">{" "} Select file</label>
-                {ppFile && <center> {ppFile.name}</center>}
-                <input id="file" type="file" onChange={(e) => setPpFile(e.target.files[0])} multiple={false} />
-                {ppFile && (
-                    <>
-                        <button onClick={uploadPhoto} className="form-button">
-                            {loading ? "Uploading..." : "Upload to Cloudinary"}
-                        </button>
-                    </>
-                )}
-            </div>
+            {currentUserId.toString() === params.id && 
+                <div className="pp-uploader">
+                    <label htmlFor="file">{" "} Select file</label>
+                    {ppFile && <center> {ppFile.name}</center>}
+                    <input id="file" type="file" onChange={(e) => setPpFile(e.target.files[0])} multiple={false} />
+                    {ppFile && (
+                        <>
+                            <button onClick={uploadPhoto} className="form-button">
+                                {loading ? "Uploading..." : "Upload to Cloudinary"}
+                            </button>
+                        </>
+                    )}
+                </div>
+            }
             <div className="profile-bottom-section">
                 <div className="profile-column">
                     <h2 className="column-title">Notifications</h2>
@@ -145,10 +152,10 @@ export default function Profile({ currentUserId }) {
                     </div>
                 </div>
                 <div className="profile-column">
-                    <h2 className="column-title">My Offers</h2>
+                    <h2 className="column-title">{currentUserId.toString() === params.id ? "My" : "Their"} Offers</h2>
                     <div className="offers-container">
                         {usersOffers.map(offer => 
-                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} deleteOffer={deleteOffer}/>
+                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} myOffer={currentUserId.toString() === params.id} deleteOffer={deleteOffer}/>
                         )}
                     </div>
                 </div>
@@ -157,21 +164,30 @@ export default function Profile({ currentUserId }) {
     )
 }
 
-function Offer({dbid, title, category, price, deleteOffer, ...props}) {
+function Offer({dbid, title, category, price, myOffer, deleteOffer, ...props}) {
     return(
         <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
             <div className="offer-row">
                 <h3 className="offer-title">{title}</h3>
                 <p>${price}</p>
             </div>
-            <div className="offer-row-2">
-                <button className="edit-button" onClick={() => console.log('Editing offer...')}>
-                    <span className="material-symbols-outlined">edit_square</span>
-                </button>
-                <button className="delete-button" onClick={() => deleteOffer(dbid)}>
-                    <span className="material-symbols-outlined">delete</span>
-                </button>
-            </div>
+            {myOffer ?
+                <div className="offer-row-2">
+                    <button className="edit-button" onClick={() => console.log('Editing offer...')}>
+                        <span className="material-symbols-outlined">edit_square</span>
+                    </button>
+                    <button className="delete-button" onClick={() => deleteOffer(dbid)}>
+                        <span className="material-symbols-outlined">delete</span>
+                    </button>
+                </div>
+                :
+                <div className="offer-row">
+                    <span></span>
+                    <button className="edit-button">
+                        <span className="material-symbols-outlined">concierge</span>
+                    </button>
+                </div>
+            }
         </div>
     )
 }
