@@ -1,0 +1,29 @@
+/* Member.css */
+
+.member-mini {
+    display: flex;
+    flex-direction: column;
+    width: 80px;
+    gap: 5px;
+    text-align: center;
+    margin: auto;
+}
+
+.member-mini img {
+    width: 80px;
+    border-radius: 40px;
+}
+
+.member-mini a {
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #447EAE;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    transition: 200ms ease-out;
+}
+.member-mini a:hover {
+    color: #1A6AA4;
+}

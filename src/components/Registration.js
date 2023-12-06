@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './index.css';
+import './css/index.css';
 
 export default function Registration({ logIn }) {
     // Different email and password states for Login and Signup

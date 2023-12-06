@@ -1,0 +1,99 @@
+/* Registration.css */
+
+.landing {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.registration h1 {
+    margin-bottom: 15px;
+}
+
+.registration-form {
+    background-color: #FFFDFC;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px 50px;
+    width: 175px;
+}
+
+.signup-form,
+.login-form {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.selected {
+    display: flex;
+}
+
+.signup-form label,
+.login-form label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    width: 100%;
+}
+
+.signup-form input,
+.login-form input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.25rem;
+    font-family: inherit;
+    padding: 0.25rem;
+}
+
+.learn-more {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.learn-more .main-text {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.landing-logo {
+    width: 250px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 768px) {
+    .landing {
+        margin-top: 25px;
+        gap: 45px;
+    }
+    .registration h1 {
+        margin-bottom: 20px;
+    }
+    .registration-form {
+        width: 400px;
+    }  
+}
+
+@media (min-width: 1024px) {
+    .landing {
+        flex-direction: row;
+        margin-top: 35px;
+        gap: 60px;
+    }
+    .registration h1 {
+        margin-bottom: 35px;
+    }
+    .learn-more {
+        border-left: 2px solid #E4D9D4;
+        padding-left: 30px;
+        padding-bottom: 20px;
+    }
+    .learn-more .main-text {
+        margin-bottom: 20px;
+    }
+}

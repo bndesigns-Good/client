@@ -1,0 +1,86 @@
+/* Profile.css */
+
+.profile-top-section {
+    margin-top: 20px;
+    padding: 20px 25px 30px;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    align-items: center;
+    background-color: #FFFDFC;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-header button {
+    margin: 0;
+}
+
+.edit-profile-form {
+    flex-direction: column;
+    gap: 10px;
+    background-color: #FFFDFC;
+    border-radius: 8px;
+    padding: 20px 50px;
+    margin: auto;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.edit-profile-form label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    width: 300px;
+}
+
+.edit-profile-form input,
+.edit-profile-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    font-family: inherit;
+    padding: 5px;
+}
+
+.profile-photo {
+    width: 160px;
+    border-radius: 80px;
+}
+
+.pronouns {
+    color: #89886C;
+}
+
+.year-joined {
+    font-style: italic;
+}
+
+.pp-uploader {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: "DM Sans", sans-serif;
+    border-bottom: 2px solid #E4D9D4;
+    padding-bottom: 20px;
+}
+
+.profile-bottom-section {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    margin-top: 30px;
+}
+
+.notifications-container {
+    margin-top: 15px;
+}

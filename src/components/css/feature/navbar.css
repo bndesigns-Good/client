@@ -1,0 +1,55 @@
+/* Navbar.css */
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 0 0 1.5rem;
+    background-color: #FFFDFC;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.nav li {
+    padding: 1.5rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+
+    transition: 200ms ease-out;
+}
+.nav li.active {
+    background-color: #ECE4E0;
+}
+.nav li:not(.active):hover {
+    background-color: #F6F3F2;
+}
+
+.nav button {
+    background-color: transparent;
+    border: none;
+    padding: 0 1.5rem;
+    margin: 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.125rem;
+    transition: 200ms ease-out;
+    box-shadow: none;
+}
+.nav button:hover {
+    background-color: #F0E9E5;
+}

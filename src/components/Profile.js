@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './index.css';
+import './css/index.css';
 import { useParams } from 'react-router-dom';
 
 
@@ -155,7 +155,7 @@ export default function Profile({ currentUserId }) {
                     <h2 className="column-title">{currentUserId.toString() === params.id ? "My" : "Their"} Offers</h2>
                     <div className="offers-container">
                         {usersOffers.map(offer => 
-                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} myOffer={currentUserId.toString() === params.id} deleteOffer={deleteOffer}/>
+                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} description={offer.description} myOffer={currentUserId.toString() === params.id} deleteOffer={deleteOffer}/>
                         )}
                     </div>
                 </div>
@@ -164,12 +164,15 @@ export default function Profile({ currentUserId }) {
     )
 }
 
-function Offer({dbid, title, category, price, myOffer, deleteOffer, ...props}) {
+function Offer({dbid, title, category, price, description, myOffer, deleteOffer, ...props}) {
     return(
         <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
             <div className="offer-row">
                 <h3 className="offer-title">{title}</h3>
                 <p>${price}</p>
+            </div>
+            <div className="description-row">
+                <p>{description}</p>
             </div>
             {myOffer ?
                 <div className="offer-row-2">

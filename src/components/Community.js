@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import './css/index.css';
 import axios from 'axios';
-import './index.css';
 import { ColorRing } from 'react-loader-spinner';
 
-import { Link } from 'react-router-dom';
+// Resulable components
+import Offer from './reusable/Offer';
+import Member from './reusable/Member';
 
 export default function Community({ currentUserId }) {
     const [offersLoaded, setOffersLoaded] = useState(false);
@@ -14,6 +16,7 @@ export default function Community({ currentUserId }) {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [price, setPrice] = useState(0);
+    const [description, setDescription] = useState("");
 
     useEffect(() => {
         getOffersWithUsers()
@@ -86,6 +89,7 @@ export default function Community({ currentUserId }) {
             title: title,
             category: category,
             price: price,
+            description: description,
             user_id: currentUserId
         };
         try {
@@ -96,6 +100,7 @@ export default function Community({ currentUserId }) {
         setTitle("");
         setCategory("");
         setPrice(0);
+        setDescription("");
         setFormClass("hide")
         getOffersWithUsers()
     }
@@ -140,6 +145,9 @@ export default function Community({ currentUserId }) {
                             <label>
                                 Price <input name="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)}/>
                             </label>
+                            <label>
+                                Description <textarea name="description" value={description} onChange={(e) => setDescription(e.target.value)}/>
+                            </label>
                             <button type="submit" className="form-button">Submit</button>
                         </form>
                     </div>
@@ -154,7 +162,7 @@ export default function Community({ currentUserId }) {
                     />
                     <div className="offers-container">
                         {offers.map(offer => 
-                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} user={offerUsers[offer.id]} myOffer={offer.user_id === currentUserId} deleteOffer={deleteOffer}/>
+                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} description={offer.description} user={offerUsers[offer.id]} myOffer={offer.user_id === currentUserId} deleteOffer={deleteOffer}/>
                         )}
                     </div>
                 </div>
@@ -168,56 +176,5 @@ export default function Community({ currentUserId }) {
                 </div>
             </div>
         </div>
-    )
-}
-
-function Offer({dbid, title, category, price, user, myOffer, deleteOffer, ...props}) {
-    if (myOffer) {
-        return(
-            <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
-                <div className="offer-row">
-                    <h3 className="offer-title">{title}</h3>
-                    <p>${price}</p>
-                </div>
-                <div className="offer-row-2">
-                    <button className="edit-button" onClick={() => console.log('Editing offer...')}>
-                        <span className="material-symbols-outlined">edit_square</span>
-                    </button>
-                    <button className="delete-button" onClick={() => deleteOffer(dbid)}>
-                        <span className="material-symbols-outlined">delete</span>
-                    </button>
-                </div>
-            </div>
-        )
-    } else {
-        return(
-            <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
-                <div className="offer-row">
-                    <h3 className="offer-title">{title}</h3>
-                    <p>${price}</p>
-                </div>
-                <div className="offer-row">
-                    <Link to="/profile" className="user">{user}</Link>
-                    <button className="edit-button">
-                        <span className="material-symbols-outlined">concierge</span>
-                    </button>
-                </div>
-            </div>
-        )
-    }
-}
-
-function Member({dbid, name, img, ...props}) {
-    return(
-        img == null ?
-            <div className="member-mini" {...props}>
-                <img src="logo1.0.png" alt="Profile" />
-                <Link to={`/profile/${dbid}`}>{name}</Link>
-            </div>
-        :
-            <div className="member-mini" {...props}>
-                <img src={img} alt="Profile" />
-                <Link to={`/profile/${dbid}`}>{name}</Link>
-            </div>
     )
 }

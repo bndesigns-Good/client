@@ -1,6 +1,14 @@
 /* General.css */
 /* Here are the styles for the elements used across the site */
 
+/* Text */
+
+.site-title {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+
 /* Icons */
 
 .material-symbols-outlined {
@@ -162,4 +170,38 @@ ul {
         font-size: 16px;
         padding-left: 20px;
     }
+}
+
+/* Forms */
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Loaders */
+
+.loader-wrapper {
+    display: block;
+    margin: auto;
+}
+
+/* Grids & Layouts */
+
+.column-title {
+    margin-bottom: 5px;
+}
+
+.column-description {
+    margin-bottom: 0.5rem;
+}
+
+.offers-container {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: 49% 49%;
+    gap: 2%;
 }

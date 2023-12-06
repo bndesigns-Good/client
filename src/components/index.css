@@ -1,9 +1,0 @@
-@import './general.css';
-@import './feature.css';
-
-/* Formatting tips */
-/* 1. Don't put a space between an element's style and it's hover style */
-
-/* Could have an MVP and subsequent version stylesheets */
-/* Pros: Could build on top of old styles, which should be rewritten */
-/* Cons: Excess code, which would waste storage */
