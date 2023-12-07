@@ -7,7 +7,7 @@ export default function Member({dbid, name, img, ...props}) {
     return(
         img == null ?
             <div className="member-mini" {...props}>
-                <img src="logo1.0.png" alt="Profile" />
+                <img src="/logo1.0.png" alt="Profile" />
                 <Link to={`/profile/${dbid}`}>{name}</Link>
             </div>
         :

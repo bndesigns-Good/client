@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './css/index.css';
+import '../css/index.css';
 import { useParams } from 'react-router-dom';
+import { ProfileOffer } from '../reusable/Offer';
 
 
 export default function Profile({ currentUserId }) {
@@ -64,7 +65,7 @@ export default function Profile({ currentUserId }) {
             setLoading(true);
             const data = new FormData();
             data.append("my_file", ppFile);
-            const response = await axios.post('/upload', data)
+            const response = await axios.post('/image', data)
             await axios.patch(`/image/${currentUserId}`, response.data)
             getCurrentUser(currentUserId)
         } catch (error) {
@@ -94,7 +95,11 @@ export default function Profile({ currentUserId }) {
     return(
         <div>
             <div className="profile-top-section">
-                <img src={currentUser.pp_url} className="profile-photo" alt="Profile" />
+                {currentUser.pp_url ?
+                    <img src={currentUser.pp_url} className="profile-photo" alt="Profile" />
+                    :
+                    <img src="/logo1.0.png" className="profile-photo" alt="Profile" />
+                }
                 <div className="profile-info">
                     <div className="info-header">
                         <div>
@@ -155,42 +160,11 @@ export default function Profile({ currentUserId }) {
                     <h2 className="column-title">{currentUserId.toString() === params.id ? "My" : "Their"} Offers</h2>
                     <div className="offers-container">
                         {usersOffers.map(offer => 
-                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} description={offer.description} myOffer={currentUserId.toString() === params.id} deleteOffer={deleteOffer}/>
+                            <ProfileOffer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} description={offer.description} myOffer={currentUserId.toString() === params.id} deleteOffer={deleteOffer}/>
                         )}
                     </div>
                 </div>
             </div>
-        </div>
-    )
-}
-
-function Offer({dbid, title, category, price, description, myOffer, deleteOffer, ...props}) {
-    return(
-        <div id={`offer-${dbid}`} className={`offer-card ${category}`} {...props}>
-            <div className="offer-row">
-                <h3 className="offer-title">{title}</h3>
-                <p>${price}</p>
-            </div>
-            <div className="description-row">
-                <p>{description}</p>
-            </div>
-            {myOffer ?
-                <div className="offer-row-2">
-                    <button className="edit-button" onClick={() => console.log('Editing offer...')}>
-                        <span className="material-symbols-outlined">edit_square</span>
-                    </button>
-                    <button className="delete-button" onClick={() => deleteOffer(dbid)}>
-                        <span className="material-symbols-outlined">delete</span>
-                    </button>
-                </div>
-                :
-                <div className="offer-row">
-                    <span></span>
-                    <button className="edit-button">
-                        <span className="material-symbols-outlined">concierge</span>
-                    </button>
-                </div>
-            }
         </div>
     )
 }

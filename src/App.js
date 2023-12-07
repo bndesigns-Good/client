@@ -1,9 +1,9 @@
 import './App.css';
 import React from 'react';
-import Navbar from './components/Navbar';
-import Community from './components/Community';
-import Profile from './components/Profile';
-import Registration from './components/Registration';
+import Navbar from './components/feature/Navbar';
+import Community from './components/feature/Community';
+import Profile from './components/feature/Profile';
+import Registration from './components/feature/Registration';
 
 import useToken from './hooks/useToken';
 

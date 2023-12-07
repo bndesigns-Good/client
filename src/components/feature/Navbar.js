@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './css/index.css';
+import '../css/index.css';
 
-import { Link, useMatch, useResolvedPath } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import InternalLink from '../reusable/InternalLink';
 
 export default function Navbar({ logOut, currentUserId }) {
     return(
@@ -14,17 +15,6 @@ export default function Navbar({ logOut, currentUserId }) {
                 <button onClick={logOut}>Log out</button>
             </ul>
         </nav>
-    )
-}
-
-function InternalLink({to, children, ...props}) {
-    const resolvedPath = useResolvedPath(to)
-    const isActive = useMatch({ path: resolvedPath.pathname, end: true })
-
-    return (
-        <li className={isActive ? "active" : ""}>
-            <Link to={to} {...props}>{children}</Link>
-        </li>
     )
 }
 

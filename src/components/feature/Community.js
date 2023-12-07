@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import './css/index.css';
+import '../css/index.css';
 import axios from 'axios';
 import { ColorRing } from 'react-loader-spinner';
 
 // Resulable components
-import Offer from './reusable/Offer';
-import Member from './reusable/Member';
+import { CommunityOffer } from '../reusable/Offer';
+import Member from '../reusable/Member';
 
 export default function Community({ currentUserId }) {
     const [offersLoaded, setOffersLoaded] = useState(false);
     const [offers, setOffers] = useState([]);
-    const [offerUsers, setOfferUsers] = useState([]);
+    const [offerUserPairs, setOfferUserPairs] = useState([]);
     const [users, setUsers] = useState([]);
     const [formClass, setFormClass] = useState("hide");
     const [title, setTitle] = useState("");
@@ -19,18 +19,18 @@ export default function Community({ currentUserId }) {
     const [description, setDescription] = useState("");
 
     useEffect(() => {
-        getOffersWithUsers()
+        getOfferUserPairs()
         getUsers()
     }, [])
 
-    const getOffersWithUsers = async () => {
+    const getOfferUserPairs = async () => {
         const idPairs = [];
         // Fetch and process the id pairs from the database
         // Store the id of the user who made the offer at the index of the offer id
         // Ex: User 3 makes offer 6
         //     idPairs[6] = 3
         try {
-            const idPairsRaw = await axios.get('/offerusers').then(response => response.data);
+            const idPairsRaw = await axios.get('/offeruserpairs').then(response => response.data);
             for (let pair of idPairsRaw) {
                 idPairs[pair.id] = pair.user_id;
             }
@@ -47,7 +47,7 @@ export default function Community({ currentUserId }) {
                     idPairs[i] = name;
                 }
             }
-            setOfferUsers(idPairs);
+            setOfferUserPairs(idPairs);
         } catch (error) {
             console.log(error);
         }
@@ -102,7 +102,7 @@ export default function Community({ currentUserId }) {
         setPrice(0);
         setDescription("");
         setFormClass("hide")
-        getOffersWithUsers()
+        getOfferUserPairs()
     }
 
     const deleteOffer = async (id) => {
@@ -111,7 +111,7 @@ export default function Community({ currentUserId }) {
         } catch (error) {
             alert(`It looks like there was an error: ${error}`)
         }
-        getOffersWithUsers()
+        getOfferUserPairs()
     }
 
     return(
@@ -121,7 +121,7 @@ export default function Community({ currentUserId }) {
             <div className="community-content">
                 <div id="offers" className="community-column">
                     <h2 className="column-title">Offers</h2>
-                    <p className="column-description">See all that your community has to offer! Offers fall under four categories: services, assists, goods, and tools.</p>
+                    <p className="column-description">See all that your community has to offer. If you're interested in an offer, click the bell icon to notify the person who posted it.</p>
                     <button className="primary-button" onClick={showForm}>Create offer</button>
                     <div className={`popup-container ${formClass}`}>
                         <form className={`create-offer-form ${formClass}`} onSubmit={handleSubmit}>
@@ -162,7 +162,7 @@ export default function Community({ currentUserId }) {
                     />
                     <div className="offers-container">
                         {offers.map(offer => 
-                            <Offer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} description={offer.description} user={offerUsers[offer.id]} myOffer={offer.user_id === currentUserId} deleteOffer={deleteOffer}/>
+                            <CommunityOffer key={offer.id} dbid={offer.id} title={offer.title} category={offer.category} price={offer.price} description={offer.description} user={offerUserPairs[offer.id]} userId={offer.user_id} myOffer={offer.user_id === currentUserId} deleteOffer={deleteOffer}/>
                         )}
                     </div>
                 </div>
