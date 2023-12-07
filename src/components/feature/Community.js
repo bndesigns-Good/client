@@ -170,7 +170,7 @@ export default function Community({ currentUserId }) {
                     <h2 className="column-title">Members</h2>
                     <div className="users-container">
                         {users.map(user => 
-                            <Member key={user.id} dbid={user.id} name={user.name} img={user.pp_url}/>
+                            <Member key={user.id} dbid={user.id} name={user.name} img={user.photo_url}/>
                         )}
                     </div>
                 </div>

@@ -95,8 +95,8 @@ export default function Profile({ currentUserId }) {
     return(
         <div>
             <div className="profile-top-section">
-                {currentUser.pp_url ?
-                    <img src={currentUser.pp_url} className="profile-photo" alt="Profile" />
+                {currentUser.photo_url ?
+                    <img src={currentUser.photo_url} className="profile-photo" alt="Profile" />
                     :
                     <img src="/logo1.0.png" className="profile-photo" alt="Profile" />
                 }
